@@ -99,12 +99,9 @@ jobs:
     outputs:
       model_info_output_path: ${{parent.outputs.model_info_output_path}}
   
-  create_rai_job: 
-
+  create_rai_job:
     type: command 
     component: azureml://registries/azureml/components/microsoft_azureml_rai_tabular_insight_constructor/versions/0.2.0
-    limits:
-      timeout: 120
     inputs: 
       title: Responsible AI for Taxi Fare Prediction
       task_type: regression
@@ -117,8 +114,6 @@ jobs:
   explain_01: 
     type: command 
     component: azureml://registries/azureml/components/microsoft_azureml_rai_tabular_explanation/versions/0.2.0
-    limits:
-      timeout: 120
     inputs: 
       comment: Some random string 
       rai_insights_dashboard: ${{parent.jobs.create_rai_job.outputs.rai_insights_dashboard}}
@@ -126,8 +121,6 @@ jobs:
   causal_01: 
     type: command 
     component: azureml://registries/azureml/components/microsoft_azureml_rai_tabular_causal/versions/0.2.0
-    limits:
-      timeout: 120
     inputs: 
       rai_insights_dashboard: ${{parent.jobs.create_rai_job.outputs.rai_insights_dashboard}} 
       treatment_features: '["store_forward", "vendor"]'
@@ -135,8 +128,6 @@ jobs:
   counterfactual_01: 
     type: command 
     component: azureml://registries/azureml/components/microsoft_azureml_rai_tabular_counterfactual/versions/0.2.0
-    limits:
-      timeout: 120
     inputs: 
       rai_insights_dashboard: ${{parent.jobs.create_rai_job.outputs.rai_insights_dashboard}} 
       total_CFs: 10
@@ -146,8 +137,6 @@ jobs:
   error_analysis_01: 
     type: command 
     component: azureml://registries/azureml/components/microsoft_azureml_rai_tabular_erroranalysis/versions/0.2.0
-    limits:
-      timeout: 120
     inputs: 
       rai_insights_dashboard: ${{parent.jobs.create_rai_job.outputs.rai_insights_dashboard}} 
       filter_features: '["distance", "passengers"]'
@@ -155,8 +144,6 @@ jobs:
   gather_01: 
     type: command 
     component: azureml://registries/azureml/components/microsoft_azureml_rai_tabular_insight_gather/versions/0.2.0
-    limits:
-      timeout: 120
     inputs: 
       constructor: ${{parent.jobs.create_rai_job.outputs.rai_insights_dashboard}} 
       insight_1: ${{parent.jobs.causal_01.outputs.causal}} 
