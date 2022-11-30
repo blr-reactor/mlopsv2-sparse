@@ -102,8 +102,7 @@ jobs:
   create_rai_job:
     type: command 
     component: azureml://registries/azureml/components/microsoft_azureml_rai_tabular_insight_constructor/versions/0.2.0
-    inputs: 
-      title: ResponsibleAI for Taxi Prediction
+    inputs:
       task_type: regression
       mode_info_path: ${{parent.jobs.register_model.outputs.model_info_output_path}} 
       train_dataset: ${{parent.jobs.prep_data.outputs.train_data}}
